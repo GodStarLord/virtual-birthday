@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { HeartIcon } from './Icons';
-import Decorations from './Decorations';
+import React, { useState, useEffect } from "react";
+import { HeartIcon } from "./Icons";
+import Decorations from "./Decorations";
 
 interface SceneLoveStoryProps {
   onNextScene: () => void;
@@ -26,7 +26,7 @@ const storyParts = [
   {
     title: "India to Canada: A Test of Love",
     text: "And now, this... a new chapter that puts thousands of miles between us. Watching the distance grow has been the hardest part.",
-    visual: 'map'
+    visual: "map",
   },
   {
     title: "Our Unbreakable Bond",
@@ -35,46 +35,73 @@ const storyParts = [
 ];
 
 const DistanceAnimation: React.FC = () => {
-    const [distance, setDistance] = useState(0);
-    const [separation, setSeparation] = useState(0);
-    const MAX_DISTANCE = 11400;
-    const ANIMATION_DURATION = 3000;
+  const [distance, setDistance] = useState(0);
+  const [separation, setSeparation] = useState(0);
+  const MAX_DISTANCE = 11400;
+  const ANIMATION_DURATION = 3000;
 
-    useEffect(() => {
-        let start: number | null = null;
-        const step = (timestamp: number) => {
-            if (!start) start = timestamp;
-            const progress = timestamp - start;
-            const distanceProgress = Math.min((progress / ANIMATION_DURATION) * MAX_DISTANCE, MAX_DISTANCE);
-            const visualProgress = Math.min((progress / ANIMATION_DURATION) * 100, 100);
+  useEffect(() => {
+    let start: number | null = null;
+    const step = (timestamp: number) => {
+      if (!start) start = timestamp;
+      const progress = timestamp - start;
+      const distanceProgress = Math.min(
+        (progress / ANIMATION_DURATION) * MAX_DISTANCE,
+        MAX_DISTANCE
+      );
+      const visualProgress = Math.min(
+        (progress / ANIMATION_DURATION) * 100,
+        100
+      );
 
-            setDistance(Math.floor(distanceProgress));
-            setSeparation(visualProgress);
+      setDistance(Math.floor(distanceProgress));
+      setSeparation(visualProgress);
 
-            if (progress < ANIMATION_DURATION) {
-                requestAnimationFrame(step);
-            }
-        };
+      if (progress < ANIMATION_DURATION) {
         requestAnimationFrame(step);
-    }, []);
+      }
+    };
+    requestAnimationFrame(step);
+  }, []);
 
-    return (
-        <div className="mt-6 text-sky-300 w-full flex flex-col items-center">
-            <div className="w-full max-w-xs h-16 relative">
-                 <div className="absolute top-0 w-4 h-4 bg-sky-400 rounded-full" style={{ left: `calc(50% - ${separation * 1.5}px)` }}></div>
-                 <div className="absolute top-0 w-4 h-4 bg-sky-400 rounded-full" style={{ left: `calc(50% + ${separation * 1.5}px)` }}></div>
-                
-                 <div className="absolute top-[6px] h-1 bg-sky-400 bg-opacity-50 border-t border-b border-dotted border-sky-300" style={{ left: `calc(50% - ${separation * 1.5}px + 8px)`, width: `${separation * 3}px` }}></div>
-                
-                 <span className="absolute -bottom-6 font-bold text-lg" style={{ left: `calc(50% - ${separation * 1.5}px - 25px)` }}>INDIA</span>
-                 <span className="absolute -bottom-6 font-bold text-lg" style={{ left: `calc(50% + ${separation * 1.5}px - 30px)` }}>CANADA</span>
-            </div>
-            <p className="text-2xl font-bold mt-4">{distance.toLocaleString()} km</p>
-            <p className="text-sm mt-1">And one unbreakable bond.</p>
-        </div>
-    );
+  return (
+    <div className="mt-6 text-sky-300 w-full flex flex-col items-center">
+      <div className="w-full max-w-xs h-16 relative">
+        <div
+          className="absolute top-0 w-4 h-4 bg-sky-400 rounded-full"
+          style={{ left: `calc(50% - ${separation * 1.5}px)` }}
+        ></div>
+        <div
+          className="absolute top-0 w-4 h-4 bg-sky-400 rounded-full"
+          style={{ left: `calc(50% + ${separation * 1.5}px)` }}
+        ></div>
+
+        <div
+          className="absolute top-[6px] h-1 bg-sky-400 bg-opacity-50 border-t border-b border-dotted border-sky-300"
+          style={{
+            left: `calc(50% - ${separation * 1.5}px + 8px)`,
+            width: `${separation * 3}px`,
+          }}
+        ></div>
+
+        <span
+          className="absolute -bottom-6 font-bold text-lg"
+          style={{ left: `calc(50% - ${separation * 1.5}px - 25px)` }}
+        >
+          India
+        </span>
+        <span
+          className="absolute -bottom-6 font-bold text-lg"
+          style={{ left: `calc(50% + ${separation * 1.5}px - 30px)` }}
+        >
+          Canada
+        </span>
+      </div>
+      <p className="text-2xl font-bold mt-4">{distance.toLocaleString()} km</p>
+      <p className="text-sm mt-1">And one unbreakable bond.</p>
+    </div>
+  );
 };
-
 
 const SceneLoveStory: React.FC<SceneLoveStoryProps> = ({ onNextScene }) => {
   const [partIndex, setPartIndex] = useState(0);
@@ -83,7 +110,7 @@ const SceneLoveStory: React.FC<SceneLoveStoryProps> = ({ onNextScene }) => {
   useEffect(() => {
     setFade(true);
   }, [partIndex]);
-  
+
   const handleNext = () => {
     setFade(false);
     setTimeout(() => {
@@ -100,12 +127,18 @@ const SceneLoveStory: React.FC<SceneLoveStoryProps> = ({ onNextScene }) => {
   return (
     <div className="relative w-full h-full flex flex-col items-center justify-center p-8 text-center">
       <Decorations />
-      <div className={`bg-black bg-opacity-40 p-10 rounded-2xl shadow-2xl max-w-3xl transition-opacity duration-500 z-10 ${fade ? 'opacity-100' : 'opacity-0'}`}>
+      <div
+        className={`bg-black bg-opacity-40 p-10 rounded-2xl shadow-2xl max-w-3xl transition-opacity duration-500 z-10 ${
+          fade ? "opacity-100" : "opacity-0"
+        }`}
+      >
         <HeartIcon className="w-16 h-16 text-rose-400 mx-auto mb-6 animate-pulse" />
-        <h1 className="text-4xl md:text-5xl font-dancing text-rose-200 mb-4">{currentPart.title}</h1>
+        <h1 className="text-4xl md:text-5xl font-dancing text-rose-200 mb-4">
+          {currentPart.title}
+        </h1>
         <div className="h-48 flex flex-col items-center justify-center">
-          {currentPart.visual === 'map' ? (
-             <DistanceAnimation />
+          {currentPart.visual === "map" ? (
+            <DistanceAnimation />
           ) : (
             <p className="text-xl md:text-2xl text-rose-100">
               {currentPart.text}
@@ -116,7 +149,9 @@ const SceneLoveStory: React.FC<SceneLoveStoryProps> = ({ onNextScene }) => {
           onClick={handleNext}
           className="mt-8 px-8 py-4 bg-rose-500 text-white font-bold rounded-full shadow-lg hover:bg-rose-600 transform hover:scale-105 transition-all duration-300"
         >
-          {partIndex < storyParts.length - 1 ? 'And then...' : "Our Journey Ahead"}
+          {partIndex < storyParts.length - 1
+            ? "And then..."
+            : "Our Journey Ahead"}
         </button>
       </div>
     </div>

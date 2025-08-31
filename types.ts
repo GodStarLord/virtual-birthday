@@ -6,6 +6,7 @@ export enum Scene {
   LoveStory,
   LongDistance,
   Timeline,
+  Reunion,
   FinalWish,
   ClosingCurtains,
 }
